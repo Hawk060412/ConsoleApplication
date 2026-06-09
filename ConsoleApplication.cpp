@@ -4,17 +4,75 @@
 #include <iostream>
 #include <assert.h>
 
+class Weapon {
+public:
+	void Use() {}
+
+
+
+};
+class Sword : public Weapon {};
+
+
+class Player {
+	std::shared_ptr<Weapon> weapon;
+	std::shared_ptr<Sword> sword;
+
+public:
+	/*Player(std::shared_ptr<Weapon> weapon1) : weapon(std::move(weapon1)) {
+		std::cout << weapon.use_count() << std::endl;
+		std::cout << weapon1.use_count() << std::endl;
+	}*/
+	Player(std::shared_ptr<Sword>p1):sword(std::move(p1)) {
+		std::cout << sword.use_count() << std::endl;
+		std::cout << p1.use_count() << std::endl;
+	}
+
+	void Attack() {
+        weapon->Use();
+		sword->Use();
+	}
+
+};
+
 
 
 int main() {
-	auto a = std::make_shared<int>();
-	auto b = a;
-	auto c = std::move(a);
 
-	std::cout << a.use_count() << std::endl;
-	std::cout << b.use_count() << std::endl;
-	std::cout << c.use_count() << std::endl;
+	
+	auto sword = std::make_shared<Sword>();
+	Player p1(std::move(sword));
+
+	
+
 }
+
+
+
+
+
+
+
+//
+//int main() {
+//	auto a = std::make_shared<int>();
+//	std::cout << a.use_count() << std::endl;
+//
+//
+//	auto b = a;
+//	std::cout << a.use_count() << std::endl;
+//	std::cout << b.use_count() << std::endl;
+//
+//
+//	auto c = std::move(a);
+//
+//	std::cout << a.use_count() << std::endl;
+//	std::cout << b.use_count() << std::endl;
+//	std::cout << c.use_count() << std::endl;
+//
+//     
+//
+//}
 
 
 
@@ -39,19 +97,6 @@ int main() {
 //
 //};
 //
-//class Player {
-//	std::shared_ptr<Weapon> weapon;
-//public:
-//	Player(std::shared_ptr<Weapon> weapon1) : weapon(weapon1) {
-//		std::cout << weapon.use_count() << std::endl;
-//		std::cout << weapon1.use_count() << std::endl;
-//	}
-//
-//	void Attack() {
-//		if (weapon) weapon->Use();
-//	}
-//
-//};
 //
 //int main() {
 //	auto wp = std::make_shared<Weapon>();
