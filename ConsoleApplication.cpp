@@ -2,10 +2,28 @@
 //
 
 #include <iostream>
+#include <assert.h>
+
+class Test {
+public:
+	void Show() {
+		std::cout << "Hello World!!" << std::endl;
+	}
+};
+
+void Func(Test* test) {
+	assert(test != nullptr);
+	test->Show();
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	Func(new Test());
+	Func(nullptr);
+	
+	/*if (p != nullptr) {
+		delete p;
+	}*/
 }
 
 // プログラムの実行: Ctrl + F5 または [デバッグ] > [デバッグなしで開始] メニュー
