@@ -5,36 +5,62 @@
 #include <assert.h>
 
 
-class Weapon {
-public:
-	void Use() {}
-
-
-
-};
-
-class Player {
-	std::shared_ptr<Weapon> weapon;
-public:
-	Player(std::shared_ptr<Weapon> weapon1) : weapon(std::move(weapon1)) {
-		std::cout << weapon.use_count() << std::endl;
-		std::cout << weapon1.use_count() << std::endl;
-	}
-
-	void Attack() {
-		if (weapon) weapon->Use();
-	}
-
-};
 
 int main() {
-	auto wp = std::make_shared<Weapon>();
-	//コピー（参照カウント＋１）
-	Player p(wp);
-	//ムーブ（所有権を移動）
-	Player q(std::move(wp));
-	return 0;
+	auto a = std::make_shared<int>();
+	auto b = a;
+	auto c = std::move(a);
+
+	std::cout << a.use_count() << std::endl;
+	std::cout << b.use_count() << std::endl;
+	std::cout << c.use_count() << std::endl;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//class Weapon {
+//public:
+//	void Use() {}
+//
+//
+//
+//};
+//
+//class Player {
+//	std::shared_ptr<Weapon> weapon;
+//public:
+//	Player(std::shared_ptr<Weapon> weapon1) : weapon(weapon1) {
+//		std::cout << weapon.use_count() << std::endl;
+//		std::cout << weapon1.use_count() << std::endl;
+//	}
+//
+//	void Attack() {
+//		if (weapon) weapon->Use();
+//	}
+//
+//};
+//
+//int main() {
+//	auto wp = std::make_shared<Weapon>();
+//	//コピー（参照カウント＋１）
+//	Player p(wp);
+//	//ムーブ（所有権を移動）
+//	Player q(std::move(wp));
+//	return 0;
+//}
 
 
 
