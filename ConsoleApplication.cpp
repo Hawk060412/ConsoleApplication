@@ -4,27 +4,78 @@
 #include <iostream>
 #include <assert.h>
 
-class Test {
+
+class Weapon {
 public:
-	void Show() {
-		std::cout << "Hello World!!" << std::endl;
-	}
+	void Use() {}
+
+
+
 };
 
-void Func(Test* test) {
-	assert(test != nullptr);
-	test->Show();
+class Player {
+	std::shared_ptr<Weapon> weapon;
+public:
+	Player(std::shared_ptr<Weapon> weapon1) : weapon(std::move(weapon1)) {
+		std::cout << weapon.use_count() << std::endl;
+		std::cout << weapon1.use_count() << std::endl;
+	}
+
+	void Attack() {
+		if (weapon) weapon->Use();
+	}
+
+};
+
+int main() {
+	auto wp = std::make_shared<Weapon>();
+	//コピー（参照カウント＋１）
+	Player p(wp);
+	//ムーブ（所有権を移動）
+	Player q(std::move(wp));
+	return 0;
 }
 
-int main()
-{
-	Func(new Test());
-	Func(nullptr);
-	
-	/*if (p != nullptr) {
-		delete p;
-	}*/
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//class Test {
+//public:
+//	void Show() {
+//		std::cout << "Hello World!!" << std::endl;
+//	}
+//};
+//
+//void Func(Test* test) {
+//	assert(test != nullptr);
+//	test->Show();
+//}
+//
+//int main()
+//{
+//	Func(new Test());
+//	Func(nullptr);
+//	
+//	/*if (p != nullptr) {
+//		delete p;
+//	}*/
+//}
 
 // プログラムの実行: Ctrl + F5 または [デバッグ] > [デバッグなしで開始] メニュー
 // プログラムのデバッグ: F5 または [デバッグ] > [デバッグの開始] メニュー
